@@ -58,7 +58,7 @@
             </div>
             <div class="bdd hover-effect">
                 <img src="../assets/skills/bdd.png" alt="" width="100vh">
-                <h3>Base de données</h3>
+                <h3>Databases</h3>
                 <div class="new-text">
                     <p>PostgreSQL</p>
                     <p>MySQL</p>
@@ -93,24 +93,32 @@
                     <p>Scrum</p>
                 </div>
             </div>
-
-
         </div>
+
+        <BoutonNext class="bouton" targetSection="experience">
+            <p>Mes experiences et projets</p>
+        </BoutonNext>
     </div>
 
 </template>
 
 <script>
+import BoutonNext from './BoutonNext.vue';
+
 
 export default {
     name: 'PageAccueil',
+    components: {
+        BoutonNext
+    }
 }
 
 </script>
 
 <style scoped>
 
-.skills{
+
+.skills {
     height: 100vh;
 }
 
@@ -134,7 +142,7 @@ export default {
     justify-content: center;
     align-items: center;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.1s ease;
 }
 
 .hover-effect:hover img,
@@ -182,8 +190,8 @@ export default {
 .bdd,
 .design,
 .equipe {
-    width: 20%;
-    height: 30vh;
+    width: 25vh;
+    height: 25vh;
     background-color: #cdcdcd;
     border-radius: 10px;
     display: flex;
@@ -194,7 +202,7 @@ export default {
     margin: 2vh;
     padding: 2vh;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.1s;
 
 }
 
@@ -223,6 +231,6 @@ export default {
 }
 
 .skills-content2 {
-    margin-bottom: 10vh;
+    margin-bottom: 2vh;
 }
 </style>

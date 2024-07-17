@@ -1,6 +1,6 @@
 <template>
   <div id="partie_resume">
-    <img class="feuille-resume" src="../assets/feuille.png" alt="">
+    <img class="feuille-resume" src="../assets/feuilles/feuille.png" alt="">
     <div id="resume" class="resume">
       <div class="resume_titre">
         <svg width="466" height="108" viewBox="0 0 466 108" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -74,19 +74,46 @@
 <script>
 import BoutonNext from './BoutonNext.vue';
 
-
 export default {
   components: {
     BoutonNext
   },
   name: 'ResumeSet',
+  mounted() {
+    this.initObserver(".resume");
+    this.initObserver(".feuille-resume");
+  },
   methods: {
-    scrollToPresentation() {
-      this.$emit('scrollToPresentation');
+    initObserver(div) {
+      const resume = this.$el.querySelector(div);
+      resume.style.opacity = '0';
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const scrollPosition = window.scrollY;
+          const divPosition = resume.getBoundingClientRect().top + scrollPosition;
+
+          if (entry.isIntersecting) {
+            // Si le scroll est avant la div
+            if (scrollPosition < divPosition) {
+              setTimeout(() => {
+                entry.target.style.animation = 'reveal-top 1s ease-out forwards';
+              }, 800);
+            } else {
+              // Si le scroll est après la div
+              setTimeout(() => {
+                // entry.target.style.animation = 'reveal-bottom 1s ease-out forwards';
+              }, 800);
+            }
+          } else {
+            // entry.target.style.animation = 'fade-out 1s ease-out forwards';
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(resume);
     }
   }
 }
-
 </script>
 
 <style scoped>

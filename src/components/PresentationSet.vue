@@ -84,6 +84,18 @@ function smoothScrollTo(target, duration) {
     background-color: #99baad;
 }
 
+@keyframes reveal-left {
+    0% {
+        left: 20%;
+        opacity: 0;
+    }
+
+    100% {
+        left: 30%;
+        opacity: 1;
+    }
+}
+
 
 .presentation {
     display: inline-flex;
@@ -93,6 +105,7 @@ function smoothScrollTo(target, duration) {
     left: 30%;
     transform: translate(-50%, -50%);
     z-index: 3;
+    animation: reveal-left 2s;
 }
 
 .identite {

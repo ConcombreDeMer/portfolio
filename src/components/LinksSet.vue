@@ -38,12 +38,6 @@
 
 export default {
     name: 'LinksSet',
-    props: {
-        links: {
-            type: Array,
-            required: true
-        }
-    }
 }
 
 </script>
