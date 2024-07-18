@@ -18,33 +18,16 @@
     <div class="nav-item">Travaux</div>
     <div class="nav-item">Contacts</div> -->
     <NavBar />
-
   </div>
-
 
   <LinksSet />
   <PresentationSet />
-
-  <div class="photos">
-    <img class="appareil_photo" src="../assets/appareil_photo.png" alt="">
-    <img class="photo_accueil" src="../assets/photo_accueil.png" alt="">
-    <div class="line-photos"></div>
-  </div>
-
-
+  <PhotosSet />
   <ResumeSet />
-
   <FormationsSet />
-
   <SkillsSet />
-
   <ExperienceSet />
-
   <PageContacts />
-
-
-  
-
 
 </template>
 
@@ -57,10 +40,12 @@ import SkillsSet from './SkillsSet.vue';
 import FormationsSet from './FormationsSet.vue';
 import PageContacts from './PageContacts.vue';
 import ExperienceSet from './ExperienceSet.vue';
+import PhotosSet from './PhotosSet.vue';
 
-import 'animate.css';
+import animations from '../mixins/animations.js';
 
 export default {
+  mixins: [animations],
   name: 'PageAccueil',
   components: {
     LinksSet,
@@ -70,54 +55,27 @@ export default {
     SkillsSet,
     FormationsSet,
     PageContacts,
-    ExperienceSet
+    ExperienceSet,
+    PhotosSet
   },
   mounted() {
-    this.initFeuilleAnimation();
+    this.$nextTick(() => {
+      this.feuillesAnimation("feuille", 40);
+
+    });
   },
   beforeUnmount() {
-    if (this.feuilleContainer) {
-      this.feuilleContainer.removeEventListener('mousemove', this.handleMouseMove);
-    }
+    this.clearFeuillesAnimation();
   },
   methods: {
-    initFeuilleAnimation() {
-      this.feuilleContainer = document.getElementById('feuille');
-      const maxDistance = 40; // Distance maximale de déplacement en pixels
-      let moveX = 0;
-      let moveY = 0;
-
-      this.handleMouseMove = (e) => {
-        const { clientX, clientY } = e;
-        const centerX = this.feuilleContainer.offsetWidth / 2;
-        const centerY = this.feuilleContainer.offsetHeight / 2;
-        const targetX = (clientX - centerX) / centerX * maxDistance; // Calcul de la position cible
-        const targetY = (clientY - centerY) / centerY * maxDistance; // Calcul de la position cible
-
-        // Interpolation linéaire pour un mouvement fluide
-        moveX += (targetX - moveX) * 0.1;
-        moveY += (targetY - moveY) * 0.1;
-      };
-
-      const animate = () => {
-        // Appliquer moveX et moveY pour déplacer ou transformer l'élément
-        // Par exemple, en ajustant le style transform de l'élément feuille
-        this.feuilleContainer.style.transform = `translate(${moveX}px, ${moveY}px)`;
-
-        requestAnimationFrame(animate);
-      };
-
-      this.feuilleContainer.addEventListener('mousemove', this.handleMouseMove);
-      animate(); // Commencer l'animation
-    }
   },
-
 }
 
 </script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import '../css/animations.css';
 
 
 body,
@@ -125,110 +83,10 @@ html {
   overflow-x: hidden;
 }
 
-@keyframes reveal-photo-accueil {
-  from {
-    opacity: 0;
-    transform: translateX(-20%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-35%);
-  }
-}
-
-/* reveal top */
-@keyframes reveal-top {
-  from {
-    opacity: 0;
-    transform: translateY(-20%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes reveal-left {
-  0% {
-    opacity: 0;
-    transform: translateX(-20%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-
-@keyframes reveal-right {
-  0% {
-    opacity: 0;
-    transform: translateX(20%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes reveal-bottom {
-  0% {
-    opacity: 0;
-    transform: translateY(20%);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes hide-bottom {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-
-
-
-
-
-
 .feuille img {
   animation: reveal-top 2s;
 }
 
-.line-photos {
-  width: 80%;
-  height: 2px;
-  background-color: #1f1f1f;
-  position: absolute;
-  top: 100vh;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
 
 
 .feuille {
@@ -281,15 +139,6 @@ html {
   filter: blur(0.5px);
 }
 
-.photos {
-  position: absolute;
-  height: 102vh;
-  width: 100%;
-  top: 0%;
-  left: 0;
-  overflow: hidden;
-}
-
 .navbar {
   height: 15vh;
   position: absolute;
@@ -300,30 +149,6 @@ html {
   flex-direction: column;
   justify-content: space-between;
 }
-
-
-.appareil_photo {
-  width: 10vh;
-  position: absolute;
-  top: 8vh;
-  left: 38vw;
-  animation: reveal-top 2s;
-}
-
-
-.photo_accueil {
-  width: 125vh;
-  object-fit: cover;
-  position: absolute;
-  top: -15vh;
-  left: 50%;
-  transform: translateX(-35%);
-  z-index: -1;
-  clip-path: inset(0 0 23.2vh 0);
-  overflow: hidden;
-  animation: reveal-photo-accueil 2s;
-}
-
 
 .logo {
   font-size: 6vh;

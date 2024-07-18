@@ -35,79 +35,24 @@
 
 import BoutonNext from './BoutonNext.vue';
 
-import 'animate.css';
+import animations from '@/mixins/animations';
 
 export default {
+    mixins: [animations],
     name: 'FormationsSet',
     components: {
         BoutonNext
     },
     mounted() {
-        this.animLicence('.licence');
-        this.animMastere('.mastere');
+        this.animationOnScroll(".licence", 100, "reveal-left", "none", "none");
+        this.animationOnScroll(".mastere", 100, "reveal-right", "none", "none");
     },
-    methods: {
-        animMastere(div) {
-            const resume = this.$el.querySelector(div);
-            resume.style.opacity = '0';
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const scrollPosition = window.scrollY;
-                    const divPosition = resume.getBoundingClientRect().top + scrollPosition;
-
-                    if (entry.isIntersecting) {
-                        // Si le scroll est avant la div
-                        if (scrollPosition < divPosition) {
-                            setTimeout(() => {
-                                entry.target.style.animation = 'reveal-right 1s ease-out forwards';
-                            }, 300);
-                        } else {
-                            // Si le scroll est après la div
-                            setTimeout(() => {
-                                // entry.target.style.animation = 'fade-out 1s ease-out forwards';
-                            }, 800);
-                        }
-                    } else {
-                        // entry.target.style.animation = 'fade-out 1s ease-out forwards';
-                    }
-                });
-            }, { threshold: 0.1 });
-            observer.observe(resume);
-        },
-        animLicence(div) {
-            const resume = this.$el.querySelector(div);
-            resume.style.opacity = '0';
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const scrollPosition = window.scrollY;
-                    const divPosition = resume.getBoundingClientRect().top + scrollPosition;
-
-                    if (entry.isIntersecting) {
-                        // Si le scroll est avant la div
-                        if (scrollPosition < divPosition) {
-                            setTimeout(() => {
-                                entry.target.style.animation = 'reveal-left 1s ease-out forwards';
-                            }, 300);
-                        } else {
-                            // Si le scroll est après la div
-                            setTimeout(() => {
-                                // entry.target.style.animation = 'fade-out 1s ease-out forwards';
-                            }, 800);
-                        }
-                    } else {
-                        // entry.target.style.animation = 'fade-out 1s ease-out forwards';
-                    }
-                });
-            }, { threshold: 0.1 });
-            observer.observe(resume);
-        }
-    }
 }
 </script>
 
 <style scoped>
+
 .next {
     position: absolute;
     bottom: 5vh;

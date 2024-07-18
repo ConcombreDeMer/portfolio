@@ -25,8 +25,17 @@
 </template>
 
 <script>
+import animations from '@/mixins/animations';
+
+
 export default {
+    mixins: [animations],
     name: 'PresentationSet',
+    mounted() {
+        this.animationOnScroll(".titre", 100, "reveal-left", "none", "none");
+        this.animationOnScroll(".identite", 100, "reveal-left", "none", "none");
+        this.animationOnScroll(".decouvrir", 100, "reveal-left", "none", "none");
+    },
     methods: {
         scrollToResume() {
             const element = document.getElementById('partie_resume');
@@ -35,30 +44,33 @@ export default {
             }
         }
     }
+
 }
+
 function smoothScrollTo(target, duration) {
-  const start = window.pageYOffset;
-  const end = target.getBoundingClientRect().top + window.pageYOffset;
-  const distance = end - start;
-  let startTime = null;
+    const start = window.pageYOffset;
+    const end = target.getBoundingClientRect().top + window.pageYOffset;
+    const distance = end - start;
+    let startTime = null;
 
-  function animation(currentTime) {
-    if (startTime === null) startTime = currentTime;
-    const timeElapsed = currentTime - startTime;
-    const run = ease(timeElapsed, start, distance, duration);
-    window.scrollTo(0, run);
-    if (timeElapsed < duration) requestAnimationFrame(animation);
-  }
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const run = ease(timeElapsed, start, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+    }
 
-  function ease(t, b, c, d) {
-    t /= d / 2;
-    if (t < 1) return c / 2 * t * t + b;
-    t--;
-    return -c / 2 * (t * (t - 2) - 1) + b;
-  }
+    function ease(t, b, c, d) {
+        t /= d / 2;
+        if (t < 1) return c / 2 * t * t + b;
+        t--;
+        return -c / 2 * (t * (t - 2) - 1) + b;
+    }
 
-  requestAnimationFrame(animation);
+    requestAnimationFrame(animation);
 }
+
 </script>
 
 <style scoped>
@@ -84,18 +96,6 @@ function smoothScrollTo(target, duration) {
     background-color: #99baad;
 }
 
-@keyframes reveal-left {
-    0% {
-        left: 20%;
-        opacity: 0;
-    }
-
-    100% {
-        left: 30%;
-        opacity: 1;
-    }
-}
-
 
 .presentation {
     display: inline-flex;
@@ -105,7 +105,6 @@ function smoothScrollTo(target, duration) {
     left: 30%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    animation: reveal-left 2s;
 }
 
 .identite {

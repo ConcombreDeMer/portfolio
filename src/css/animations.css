@@ -1,0 +1,134 @@
+@keyframes reveal-photo-accueil {
+    from {
+        opacity: 0;
+        transform: translateX(-20%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-35%);
+    }
+}
+
+/* -------------------------------------------- REVEAL -------------------------------------------- */
+
+/* reveal-top */
+@keyframes reveal-top {
+    from {
+        opacity: 0;
+        transform: translateY(-20%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* reveal-left */
+@keyframes reveal-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* reveal-right */
+@keyframes reveal-right {
+    0% {
+        opacity: 0;
+        transform: translateX(20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* reveal-bottom */
+@keyframes reveal-bottom {
+    0% {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+/* -------------------------------------------- HIDE -------------------------------------------- */
+
+/* hide-top */
+@keyframes hide-top {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* hide-left */
+@keyframes hide-left {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+
+/* hide-right */
+@keyframes hide-right {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+
+/* hide-bottom */
+@keyframes hide-bottom {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+/* -------------------------------------------- FADE -------------------------------------------- */
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
