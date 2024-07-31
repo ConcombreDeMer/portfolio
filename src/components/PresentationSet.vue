@@ -19,6 +19,9 @@
                     fill="white" />
             </svg>
         </div>
+        <div class="cv" @click="downloadFile">
+            Télécharger mon CV
+        </div>
 
     </div>
 
@@ -35,6 +38,7 @@ export default {
         this.animationOnScroll(".titre", 100, "reveal-left", "none", "none");
         this.animationOnScroll(".identite", 100, "reveal-left", "none", "none");
         this.animationOnScroll(".decouvrir", 100, "reveal-left", "none", "none");
+        this.animationOnScroll(".cv", 100, "reveal-left", "none", "none");
     },
     methods: {
         scrollToResume() {
@@ -42,6 +46,14 @@ export default {
             if (element) {
                 smoothScrollTo(element, 1000);
             }
+        },
+        downloadFile() {
+            const link = document.createElement('a');
+            link.href = '/CV.pdf'; // Remplacez par le chemin réel de votre fichier
+            link.download = 'cv.pdf'; // Nom du fichier à télécharger
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     }
 
@@ -74,6 +86,25 @@ function smoothScrollTo(target, duration) {
 </script>
 
 <style scoped>
+.cv {
+    width: 20vh;
+    background-color: #ffffff;
+    color: #8CAF9E;
+    padding: 1vh 2vw;
+    margin-top: 2vh;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+    font-size: 1.8vh;
+    border: 2px solid #8CAF9E;
+}
+
+.cv:hover {
+    background-color: #8CAF9E;
+    color: white;
+}
+
+
 .arrow {
     width: 6vh;
     vertical-align: middle;

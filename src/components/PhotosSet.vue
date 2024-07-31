@@ -57,10 +57,9 @@ export default {
     width: 80%;
     height: 2px;
     background-color: #1f1f1f;
-    position: absolute;
+    position: relative;
     top: 100vh;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
 }
 </style>
