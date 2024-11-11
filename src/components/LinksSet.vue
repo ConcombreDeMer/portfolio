@@ -2,7 +2,7 @@
 
     <div class="links">
 
-        <a class="linkedin" href=""><svg width="60" height="61" viewBox="0 0 60 61" fill="none"
+        <a class="linkedin" href="https://www.linkedin.com/in/yanis-rozier-79918226a/"><svg width="60" height="61" viewBox="0 0 60 61" fill="none"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="29.9341" cy="30.2085" r="29.9341" fill="#8CAF9E" />
                 <rect x="12.7588" y="7.14453" width="37.2949" height="41.2207" fill="url(#pattern0_3_21)" />
@@ -16,7 +16,7 @@
             </svg>
         </a>
 
-        <a class="github" href=""><svg width="60" height="60" viewBox="0 0 60 60" fill="none"
+        <a class="github" href="https://github.com/ConcombreDeMer"><svg width="60" height="60" viewBox="0 0 60 60" fill="none"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <circle cx="29.9341" cy="29.9341" r="29.9341" fill="#8CAF9E" />
                 <rect x="4.90723" y="3.92578" width="50.0537" height="51.0352" fill="url(#pattern0_3_22)" />
@@ -52,6 +52,7 @@ export default {
   top: 80vh;
   right: 2vw;
   gap: 2vh;
+  z-index: 20;
 }
 
 

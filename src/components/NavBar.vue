@@ -1,463 +1,181 @@
 <template>
-
-    <div>
-        <div id="hamburger" @click="toggleMenu" class="hamburglar is-closed">
-            <div class="burger-icon">
-                <div class="burger-container">
-                    <span class="burger-bun-top"></span>
-                    <span class="burger-filling"></span>
-                    <span class="burger-bun-bot"></span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
+    <header>
+        <input id="burger" type="checkbox" ref="burger" @click="moveMenu"/>
+        <label for="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <nav>
+            <ul>
+                <li><a href="#" @click="scrollToTop">Accueil</a></li>
+                <li><a href="#partie_resume" @click="closeMenu">À propos de moi</a></li>
+                <li><a href="#formations" @click="closeMenu">Parcours</a></li>
+                <li><a href="#skills" @click="closeMenu">Compétences</a></li>
+                <li><a href="#experience" @click="closeMenu">Expériences</a></li>
+                <li><a href="#contacts" @click="closeMenu">Me contacter</a></li>
+            </ul>
+        </nav>
+    </header>
 </template>
 
 <script>
 export default {
     name: 'NavBar',
+    menu: false,
     methods: {
-        toggleMenu() {
-            var trigger = document.getElementById('hamburger');
-            var isClosed = trigger.classList.contains('is-closed');
-            var navbar = document.getElementsByClassName('mobile-navbar').item(0);
-            var links = document.getElementsByClassName('mobile-links').item(0);
-            var socialMedia = document.getElementsByClassName('mobile-social-media').item(0);
-
-            if (isClosed) {
-                navbar.style.display = 'block';
-                setTimeout(() => {
-                    console.log('is open');
-                    trigger.classList.remove('is-closed');
-                    trigger.classList.add('is-open');
-
-                    // Définir la hauteur à une valeur spécifique
-                    navbar.style.height = '280px'; // ou toute autre hauteur souhaitée
-
-                    // Afficher les éléments avec une transition fluide
-                    links.style.opacity = '1';
-                    links.style.transform = 'translateY(0)';
-                    socialMedia.style.opacity = '1';
-                    socialMedia.style.transform = 'translateY(0)';
-                }, 10);
+        moveMenu() {
+            if (this.menu) {
+                this.closeMenu();
             } else {
-                console.log('is closed');
-                trigger.classList.remove('is-open');
-                trigger.classList.add('is-closed');
-
-                // Réinitialiser la hauteur à auto
-                navbar.style.height = '0';
-
-                // Masquer les éléments avec une transition fluide
-                links.style.opacity = '0';
-                links.style.transform = 'translateY(-10px)';
-                socialMedia.style.opacity = '0';
-                socialMedia.style.transform = 'translateY(-10px)';
-
-
-                // attendre la fin de l'animation pour masquer les éléments
-                setTimeout(() => {
-                    navbar.style.display = 'none';
-                }, 250);
+                this.openMenu();
             }
-
-            // si l'ecran est redimensionné, on ferme le menu
-            window.onresize = function() {
-                if (window.innerWidth > 768) {
-                    trigger.classList.remove('is-open');
-                    trigger.classList.add('is-closed');
-                    navbar.style.height = '0';
-                    links.style.opacity = '0';
-                    links.style.transform = 'translateY(-10px)';
-                    socialMedia.style.opacity = '0';
-                    socialMedia.style.transform = 'translateY(-10px)';
-                    setTimeout(() => {
-                        navbar.style.display = 'none';
-                    }, 250);
-                }
-            }
-        }
-    }
+        },
+        openMenu() {
+            this.menu = true;
+            this.$refs.burger.checked = true;
+            document.body.style.overflow = 'hidden';
+            console.log('openMenu');
+        },
+        closeMenu() {
+            this.menu = false;
+            this.$refs.burger.checked = false;
+            document.body.style.overflow = 'auto';
+            console.log('closeMenu');
+        },
+        scrollToTop(event) {
+            event.preventDefault();
+            this.closeMenu();
+            window.scrollTo({ top: 0 });
+        },
+    
+    },
+    mounted() {
+        // this.moveMenu();  
+    },
 }
 </script>
 
 <style scoped>
-
 /* -------------------------------- MOBILE BUTTON -------------------------------- */
 
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
+#burger {
+    display: none;
+    z-index: 100;
 }
 
-.burger-icon {
+main {
+    height: 100vh;
+    width: 100vw;
+}
+
+input+label {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    height: 20px;
+    width: 15px;
+    z-index: 100;
+}
+
+span {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 20px 16px;
-    height: 68px;
-    width: 68px;
+    width: 100%;
+    height: 2px;
+    top: 50%;
+    margin-top: -1px;
+    left: 0;
+    display: block;
+    background: rgb(51, 51, 51);
+    transition: 0.5s;
+}
+
+span:first-child {
+    top: 3px;
+}
+
+span:last-child {
+    top: 16px;
+}
+
+label:hover {
     cursor: pointer;
 }
 
-.burger-container {
-    position: relative;
-    height: 28px;
-    width: 36px;
+input:checked+label span {
+    opacity: 0;
+    top: 50%;
 }
 
-.burger-bun-top,
-.burger-bun-bot,
-.burger-filling {
-    position: absolute;
-    display: block;
-    height: 4px;
-    width: 36px;
-    border-radius: 2px;
-    background: #000000;
+input:checked+label span:first-child {
+    opacity: 1;
+    transform: rotate(405deg);
 }
 
-.burger-bun-top {
+input:checked+label span:last-child {
+    opacity: 1;
+    transform: rotate(-405deg);
+}
+
+input~nav {
+    background: #8CAF9E;
+    position: fixed;
     top: 0;
-    transform-origin: 34px 2px;
+    left: 0;
+    width: 100vw;
+    height: 0px;
+    z-index: 3;
+    transition: 0.5s;
+    overflow: hidden;
+    text-align: center;
+    position: fixed;
+    right: 20%;
 }
 
-.burger-bun-bot {
-    bottom: 0;
-    transform-origin: 34px 2px;
+input~nav li {
+    list-style-type: none;
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0s;
 }
 
-.burger-filling {
-    top: 12px;
+input~nav ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.hamburglar.is-open .burger-bun-top {
-    -webkit-animation: bun-top-out 0.6s linear normal;
-    animation: bun-top-out 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+input~nav a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 4.5vh;
+    text-align: left;
+    color: white;
+    display: block;
+    padding: 30px;
+    transition: 0.3s;
 }
 
-.hamburglar.is-open .burger-bun-bot {
-    -webkit-animation: bun-bot-out 0.6s linear normal;
-    animation: bun-bot-out 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+input~nav a:hover {
+    text-shadow: 0 0 10px white;
 }
 
-.hamburglar.is-closed .burger-bun-top {
-    -webkit-animation: bun-top-in 0.6s linear normal;
-    animation: bun-top-in 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+input~nav a:not(:hover) {   
+    text-shadow: none;
 }
 
-.hamburglar.is-closed .burger-bun-bot {
-    -webkit-animation: bun-bot-in 0.6s linear normal;
-    animation: bun-bot-in 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
+input:checked~nav {
+    height: 100vh;
+    transition-delay: 0s;
+    z-index: 50;
 }
 
-@-webkit-keyframes bun-top-out {
-    0% {
-        left: 0;
-        top: 0;
-        transform: rotate(0deg);
-    }
-
-    20% {
-        left: 0;
-        top: 0;
-        transform: rotate(15deg);
-    }
-
-    80% {
-        left: -5px;
-        top: 0;
-        transform: rotate(-60deg);
-    }
-
-    100% {
-        left: -5px;
-        top: 1px;
-        transform: rotate(-45deg);
-    }
+input:checked~nav li {
+    opacity: 1;
+    transition-delay: 0.5s;
 }
-
-@keyframes bun-top-out {
-    0% {
-        left: 0;
-        top: 0;
-        transform: rotate(0deg);
-    }
-
-    20% {
-        left: 0;
-        top: 0;
-        transform: rotate(15deg);
-    }
-
-    80% {
-        left: -5px;
-        top: 0;
-        transform: rotate(-60deg);
-    }
-
-    100% {
-        left: -5px;
-        top: 1px;
-        transform: rotate(-45deg);
-    }
-}
-
-@-webkit-keyframes bun-bot-out {
-    0% {
-        left: 0;
-        transform: rotate(0deg);
-    }
-
-    20% {
-        left: 0;
-        transform: rotate(-15deg);
-    }
-
-    80% {
-        left: -5px;
-        transform: rotate(60deg);
-    }
-
-    100% {
-        left: -5px;
-        transform: rotate(45deg);
-    }
-}
-
-@keyframes bun-bot-out {
-    0% {
-        left: 0;
-        transform: rotate(0deg);
-    }
-
-    20% {
-        left: 0;
-        transform: rotate(-15deg);
-    }
-
-    80% {
-        left: -5px;
-        transform: rotate(60deg);
-    }
-
-    100% {
-        left: -5px;
-        transform: rotate(45deg);
-    }
-}
-
-@-webkit-keyframes bun-top-in {
-    0% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(-45deg);
-    }
-
-    20% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(-60deg);
-    }
-
-    80% {
-        left: 0;
-        bot: 0;
-        transform: rotate(15deg);
-    }
-
-    100% {
-        left: 0;
-        bot: 1px;
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes bun-top-in {
-    0% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(-45deg);
-    }
-
-    20% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(-60deg);
-    }
-
-    80% {
-        left: 0;
-        bot: 0;
-        transform: rotate(15deg);
-    }
-
-    100% {
-        left: 0;
-        bot: 1px;
-        transform: rotate(0deg);
-    }
-}
-
-@-webkit-keyframes bun-bot-in {
-    0% {
-        left: -5px;
-        transform: rotate(45deg);
-    }
-
-    20% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(60deg);
-    }
-
-    80% {
-        left: 0;
-        bot: 0;
-        transform: rotate(-15deg);
-    }
-
-    100% {
-        left: 0;
-        transform: rotate(0deg);
-    }
-}
-
-@keyframes bun-bot-in {
-    0% {
-        left: -5px;
-        transform: rotate(45deg);
-    }
-
-    20% {
-        left: -5px;
-        bot: 0;
-        transform: rotate(60deg);
-    }
-
-    80% {
-        left: 0;
-        bot: 0;
-        transform: rotate(-15deg);
-    }
-
-    100% {
-        left: 0;
-        transform: rotate(0deg);
-    }
-}
-
-.hamburglar.is-open .burger-filling {
-    -webkit-animation: burger-fill-out 0.6s linear normal;
-    animation: burger-fill-out 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-}
-
-.hamburglar.is-closed .burger-filling {
-    -webkit-animation: burger-fill-in 0.6s linear normal;
-    animation: burger-fill-in 0.6s linear normal;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-}
-
-@-webkit-keyframes burger-fill-in {
-    0% {
-        width: 0;
-        left: 36px;
-    }
-
-    40% {
-        width: 0;
-        left: 40px;
-    }
-
-    80% {
-        width: 36px;
-        left: -6px;
-    }
-
-    100% {
-        width: 36px;
-        left: 0px;
-    }
-}
-
-@keyframes burger-fill-in {
-    0% {
-        width: 0;
-        left: 36px;
-    }
-
-    40% {
-        width: 0;
-        left: 40px;
-    }
-
-    80% {
-        width: 36px;
-        left: -6px;
-    }
-
-    100% {
-        width: 36px;
-        left: 0px;
-    }
-}
-
-@-webkit-keyframes burger-fill-out {
-    0% {
-        width: 36px;
-        left: 0px;
-    }
-
-    20% {
-        width: 42px;
-        left: -6px;
-    }
-
-    40% {
-        width: 0;
-        left: 40px;
-    }
-
-    100% {
-        width: 0;
-        left: 36px;
-    }
-}
-
-@keyframes burger-fill-out {
-    0% {
-        width: 36px;
-        left: 0px;
-    }
-
-    20% {
-        width: 42px;
-        left: -6px;
-    }
-
-    40% {
-        width: 0;
-        left: 40px;
-    }
-
-    100% {
-        width: 0;
-        left: 36px;
-    }
-}
-
 </style>

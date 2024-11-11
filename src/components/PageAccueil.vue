@@ -9,7 +9,7 @@
   </div>
 
 
-  <div class="logo">
+  <div class="logo" id="logo">
     <p>Y<span class="point">.</span></p>
   </div>
 
